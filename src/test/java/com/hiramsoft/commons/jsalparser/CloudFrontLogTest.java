@@ -3,13 +3,13 @@ package com.hiramsoft.commons.jsalparser;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
@@ -52,7 +52,7 @@ public class CloudFrontLogTest extends TestCase
 
 		assertEquals(6, entries.size());
 		CloudFrontWebLogEntry entry = entries.get(0);
-		assertEquals(entry.getDateTime(), new DateTime(2014, 8, 28, 04, 48, 38, DateTimeZone.UTC));
+		assertEquals(entry.getDateTime(), OffsetDateTime.of(2014, 8, 28, 04, 48, 38, 0, ZoneOffset.UTC));
 		assertEquals(entry.getxEdgeLocation(), "SEA50");
 		assertEquals(entry.getServerToClientBytes(), 19740);
 		assertEquals(entry.getClientIpAddress(), "192.168.0.1");
@@ -85,7 +85,7 @@ public class CloudFrontLogTest extends TestCase
 
 		assertEquals(1, entries.size());
 		CloudFrontWebLogEntry entry = entries.get(0);
-		assertEquals(entry.getDateTime(), new DateTime(2014, 8, 28, 04, 48, 38, DateTimeZone.UTC));
+		assertEquals(entry.getDateTime(), OffsetDateTime.of(2014, 8, 28, 04, 48, 38, 0, ZoneOffset.UTC));
 		assertEquals(entry.getxEdgeLocation(), "SEA50");
 		assertEquals(entry.getServerToClientBytes(), 19740);
 		assertEquals(entry.getClientIpAddress(), "192.168.0.1");

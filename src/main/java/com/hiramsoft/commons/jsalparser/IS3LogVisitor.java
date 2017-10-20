@@ -5,5 +5,5 @@ package com.hiramsoft.commons.jsalparser;
  */
 public interface IS3LogVisitor {
 
-	void accept(S3LogEntry entry);
+    void accept(S3LogEntry entry);
 }

@@ -1,7 +1,6 @@
 package com.hiramsoft.commons.jsalparser;
 
-import org.joda.time.DateTime;
-
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 /**
@@ -9,194 +8,192 @@ import java.util.ArrayList;
  */
 public class CloudFrontWebLogEntry {
 
-	// http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
+    // http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
 
-	public CloudFrontWebLogEntry(){
-		this.extras = new ArrayList<String>();
-	}
+    // used by the builder because the CloudFront format splits date and time apart
+    // even though it's way more useful to get a proper DateTime object
+    // so, someone has to store the state, and it seems to make the most sense to store here
+    protected String dateHolder;
+    protected String timeHolder;
+    private OffsetDateTime dateTime;
+    private String xEdgeLocation;
+    private long serverToClientBytes;
+    private String clientIpAddress;
+    private String clientToServerMethod;
+    private String clientToServerHost;
+    private String clientToServerUriStem;
+    private int serverToClientStatus;
+    private String clientToServerReferrer;
+    private String clientToServerUserAgent;
+    private String clientToServerStatus;
+    private String clientToServerQueryString;
+    private String clientToServerCookies;
+    private String xEdgeResultType;
+    private String xEdgeRequestId;
+    private String xHostHeader;
+    private boolean clientToServerIsHttps;
+    private long clientToServerBytes;
+    private long timeTakenMilliSeconds;
+    private ArrayList<String> extras;
 
-	private DateTime dateTime;
-	private String xEdgeLocation;
-	private long serverToClientBytes;
-	private String clientIpAddress;
-	private String clientToServerMethod;
-	private String clientToServerHost;
-	private String clientToServerUriStem;
-	private int serverToClientStatus;
-	private String clientToServerReferrer;
-	private String clientToServerUserAgent;
-	private String clientToServerStatus;
-	private String clientToServerQueryString;
-	private String clientToServerCookies;
-	private String xEdgeResultType;
-	private String xEdgeRequestId;
-	private String xHostHeader;
-	private boolean clientToServerIsHttps;
-	private long clientToServerBytes;
-	private long timeTakenMilliSeconds;
+    public CloudFrontWebLogEntry() {
+        extras = new ArrayList<>();
+    }
 
-	public ArrayList<String> getExtras() {
-		return extras;
-	}
+    public ArrayList<String> getExtras() {
+        return extras;
+    }
 
-	private ArrayList<String> extras;
+    public OffsetDateTime getDateTime() {
+        return dateTime;
+    }
 
-	// used by the builder because the CloudFront format splits date and time apart
-	// even though it's way more useful to get a proper DateTime object
-	// so, someone has to store the state, and it seems to make the most sense to store here
-	protected String dateHolder;
-	protected String timeHolder;
+    public void setDateTime(OffsetDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 
-	public DateTime getDateTime() {
-		return dateTime;
-	}
+    public String getxEdgeLocation() {
+        return xEdgeLocation;
+    }
 
-	public void setDateTime(DateTime dateTime) {
-		this.dateTime = dateTime;
-	}
+    public void setxEdgeLocation(String xEdgeLocation) {
+        this.xEdgeLocation = xEdgeLocation;
+    }
 
-	public String getxEdgeLocation() {
-		return xEdgeLocation;
-	}
+    public long getServerToClientBytes() {
+        return serverToClientBytes;
+    }
 
-	public void setxEdgeLocation(String xEdgeLocation) {
-		this.xEdgeLocation = xEdgeLocation;
-	}
+    public void setServerToClientBytes(long serverToClientBytes) {
+        this.serverToClientBytes = serverToClientBytes;
+    }
 
-	public long getServerToClientBytes() {
-		return serverToClientBytes;
-	}
+    public String getClientIpAddress() {
+        return clientIpAddress;
+    }
 
-	public void setServerToClientBytes(long serverToClientBytes) {
-		this.serverToClientBytes = serverToClientBytes;
-	}
+    public void setClientIpAddress(String clientIpAddress) {
+        this.clientIpAddress = clientIpAddress;
+    }
 
-	public String getClientIpAddress() {
-		return clientIpAddress;
-	}
+    public String getClientToServerMethod() {
+        return clientToServerMethod;
+    }
 
-	public void setClientIpAddress(String clientIpAddress) {
-		this.clientIpAddress = clientIpAddress;
-	}
+    public void setClientToServerMethod(String clientToServerMethod) {
+        this.clientToServerMethod = clientToServerMethod;
+    }
 
-	public String getClientToServerMethod() {
-		return clientToServerMethod;
-	}
+    public String getClientToServerHost() {
+        return clientToServerHost;
+    }
 
-	public void setClientToServerMethod(String clientToServerMethod) {
-		this.clientToServerMethod = clientToServerMethod;
-	}
+    public void setClientToServerHost(String clientToServerHost) {
+        this.clientToServerHost = clientToServerHost;
+    }
 
-	public String getClientToServerHost() {
-		return clientToServerHost;
-	}
+    public String getClientToServerUriStem() {
+        return clientToServerUriStem;
+    }
 
-	public void setClientToServerHost(String clientToServerHost) {
-		this.clientToServerHost = clientToServerHost;
-	}
+    public void setClientToServerUriStem(String clientToServerUriStem) {
+        this.clientToServerUriStem = clientToServerUriStem;
+    }
 
-	public String getClientToServerUriStem() {
-		return clientToServerUriStem;
-	}
+    public int getServerToClientStatus() {
+        return serverToClientStatus;
+    }
 
-	public void setClientToServerUriStem(String clientToServerUriStem) {
-		this.clientToServerUriStem = clientToServerUriStem;
-	}
+    public void setServerToClientStatus(int serverToClientStatus) {
+        this.serverToClientStatus = serverToClientStatus;
+    }
 
-	public int getServerToClientStatus() {
-		return serverToClientStatus;
-	}
+    public String getClientToServerReferrer() {
+        return clientToServerReferrer;
+    }
 
-	public void setServerToClientStatus(int serverToClientStatus) {
-		this.serverToClientStatus = serverToClientStatus;
-	}
+    public void setClientToServerReferrer(String clientToServerReferrer) {
+        this.clientToServerReferrer = clientToServerReferrer;
+    }
 
-	public String getClientToServerReferrer() {
-		return clientToServerReferrer;
-	}
+    public String getClientToServerUserAgent() {
+        return clientToServerUserAgent;
+    }
 
-	public void setClientToServerReferrer(String clientToServerReferrer) {
-		this.clientToServerReferrer = clientToServerReferrer;
-	}
+    public void setClientToServerUserAgent(String clientToServerUserAgent) {
+        this.clientToServerUserAgent = clientToServerUserAgent;
+    }
 
-	public String getClientToServerUserAgent() {
-		return clientToServerUserAgent;
-	}
+    public String getClientToServerStatus() {
+        return clientToServerStatus;
+    }
 
-	public void setClientToServerUserAgent(String clientToServerUserAgent) {
-		this.clientToServerUserAgent = clientToServerUserAgent;
-	}
+    public void setClientToServerStatus(String clientToServerStatus) {
+        this.clientToServerStatus = clientToServerStatus;
+    }
 
-	public String getClientToServerStatus() {
-		return clientToServerStatus;
-	}
+    public String getClientToServerQueryString() {
+        return clientToServerQueryString;
+    }
 
-	public void setClientToServerStatus(String clientToServerStatus) {
-		this.clientToServerStatus = clientToServerStatus;
-	}
+    public void setClientToServerQueryString(String clientToServerQueryString) {
+        this.clientToServerQueryString = clientToServerQueryString;
+    }
 
-	public String getClientToServerQueryString() {
-		return clientToServerQueryString;
-	}
+    public String getClientToServerCookies() {
+        return clientToServerCookies;
+    }
 
-	public void setClientToServerQueryString(String clientToServerQueryString) {
-		this.clientToServerQueryString = clientToServerQueryString;
-	}
+    public void setClientToServerCookies(String clientToServerCookies) {
+        this.clientToServerCookies = clientToServerCookies;
+    }
 
-	public String getClientToServerCookies() {
-		return clientToServerCookies;
-	}
+    public String getxEdgeResultType() {
+        return xEdgeResultType;
+    }
 
-	public void setClientToServerCookies(String clientToServerCookies) {
-		this.clientToServerCookies = clientToServerCookies;
-	}
+    public void setxEdgeResultType(String xEdgeResultType) {
+        this.xEdgeResultType = xEdgeResultType;
+    }
 
-	public String getxEdgeResultType() {
-		return xEdgeResultType;
-	}
+    public String getxEdgeRequestId() {
+        return xEdgeRequestId;
+    }
 
-	public void setxEdgeResultType(String xEdgeResultType) {
-		this.xEdgeResultType = xEdgeResultType;
-	}
+    public void setxEdgeRequestId(String xEdgeRequestId) {
+        this.xEdgeRequestId = xEdgeRequestId;
+    }
 
-	public String getxEdgeRequestId() {
-		return xEdgeRequestId;
-	}
+    public String getxHostHeader() {
+        return xHostHeader;
+    }
 
-	public void setxEdgeRequestId(String xEdgeRequestId) {
-		this.xEdgeRequestId = xEdgeRequestId;
-	}
+    public void setxHostHeader(String xHostHeader) {
+        this.xHostHeader = xHostHeader;
+    }
 
-	public String getxHostHeader() {
-		return xHostHeader;
-	}
+    public boolean isClientToServerIsHttps() {
+        return clientToServerIsHttps;
+    }
 
-	public void setxHostHeader(String xHostHeader) {
-		this.xHostHeader = xHostHeader;
-	}
+    public void setClientToServerIsHttps(boolean clientToServerIsHttps) {
+        this.clientToServerIsHttps = clientToServerIsHttps;
+    }
 
-	public boolean isClientToServerIsHttps() {
-		return clientToServerIsHttps;
-	}
+    public long getClientToServerBytes() {
+        return clientToServerBytes;
+    }
 
-	public void setClientToServerIsHttps(boolean clientToServerIsHttps) {
-		this.clientToServerIsHttps = clientToServerIsHttps;
-	}
+    public void setClientToServerBytes(long clientToServerBytes) {
+        this.clientToServerBytes = clientToServerBytes;
+    }
 
-	public long getClientToServerBytes() {
-		return clientToServerBytes;
-	}
+    public long getTimeTakenMilliSeconds() {
+        return timeTakenMilliSeconds;
+    }
 
-	public void setClientToServerBytes(long clientToServerBytes) {
-		this.clientToServerBytes = clientToServerBytes;
-	}
-
-	public long getTimeTakenMilliSeconds() {
-		return timeTakenMilliSeconds;
-	}
-
-	public void setTimeTakenMilliSeconds(long timeTakenMilliSeconds) {
-		this.timeTakenMilliSeconds = timeTakenMilliSeconds;
-	}
+    public void setTimeTakenMilliSeconds(long timeTakenMilliSeconds) {
+        this.timeTakenMilliSeconds = timeTakenMilliSeconds;
+    }
 
 }

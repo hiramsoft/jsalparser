@@ -7,5 +7,5 @@ package com.hiramsoft.commons.jsalparser;
  */
 interface IValueBuilder {
 
-	void accept(String value, CloudFrontWebLogEntry entry);
+    void accept(String value, CloudFrontWebLogEntry entry);
 }
