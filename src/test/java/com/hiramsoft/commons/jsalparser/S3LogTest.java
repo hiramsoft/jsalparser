@@ -98,25 +98,40 @@ public class S3LogTest
 
 	public void testSynopsis1() throws IOException
 	{
+		long TenMegabytes = 10000000L;
 		String content = "1f000000000c6c88eb9dd89c000000000b35b0000000a5 www.example.com [27/Aug/2014:20:20:05 +0000] 192.168.0.1 - BFE596E2F4D94C8F WEBSITE.GET.OBJECT media/example.jpg \"GET /media/example.jpg HTTP/1.1\" 304 - - 27553 202 - \"http://www.example.com/page.html\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53\" -";
 		List<S3LogEntry> entries = JSalParser.parseS3Log(content);
+		assertEquals(1, entries.size());
+		S3LogEntry entry = entries.get(0);
 
-		long TenMegabytes = 10000000L;
+		// Notice how the numbers are numbers, no additional parsing needed
+		if(entry.getObjectSize() > TenMegabytes)
+		{
+			System.out.println(entry.getTime());
 
-		for(int i=0;i<entries.size();i++) {
-			S3LogEntry entry = entries.get(i);
-
-			// Notice how the numbers are numbers, no additional parsing needed
-			if(entry.getObjectSize() > TenMegabytes)
-			{
-				System.out.println(entry.getTime());
-
-				// getTime() returns a JODA DateTime object,
-				// so Java prints:
-				// 2014-08-27T20:20:05.000+00:00
-			}
+			// getTime() returns a JODA DateTime object,
+			// so Java prints:
+			// 2014-08-27T20:20:05.000+00:00
 		}
+	}
 
-		assertEquals(entries.size(), 1);
+	// Double quoted user agent
+	public void testSynopsis2()
+	{
+		String content = "1f000000000c6c88eb9dd89c000000000b35b0000000a5 www.example.com [27/Aug/2014:20:20:05 +0000] 192.168.0.1 - BFE596E2F4D94C8F WEBSITE.GET.OBJECT media/example.jpg \"GET /media/example.jpg HTTP/1.1\" 304 - - 27553 202 - \"http://www.example.com/page.html\" \"\"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53\"\" -";
+		List<S3LogEntry> entries = JSalParser.parseS3Log(content);
+		assertEquals(1, entries.size());
+		S3LogEntry entry = entries.get(0);
+		assertEquals("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53", entry.getUserAgent());
+	}
+
+	// Double quoted empty-value user agent
+	public void testSynopsis3()
+	{
+		String content = "1f000000000c6c88eb9dd89c000000000b35b0000000a5 www.example.com [27/Aug/2014:20:20:05 +0000] 192.168.0.1 - BFE596E2F4D94C8F WEBSITE.GET.OBJECT media/example.jpg \"GET /media/example.jpg HTTP/1.1\" 304 - - 27553 202 - \"http://www.example.com/page.html\" \"\"\"\" -";
+		List<S3LogEntry> entries = JSalParser.parseS3Log(content);
+		assertEquals(1, entries.size());
+		S3LogEntry entry = entries.get(0);
+		assertEquals("", entry.getUserAgent());
 	}
 }

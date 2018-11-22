@@ -12,6 +12,12 @@ value returns [String val]
 			$val = $val.substring(1, $val.length()-1);
 			$val = $val.replace("\\\"", "\""); // unescape the quotes
 		}
+	| DoubleQuotedValue
+		{
+			$val = $DoubleQuotedValue.text;
+			$val = $val.substring(2, $val.length()-2);
+			$val = $val.replace("\\\"\\\"", "\"\""); // unescape the quotes
+		}
 	;
 
 NoValue
@@ -28,6 +34,10 @@ DateValue
 
 QuotedValue
 	: '"' (ESCAPED_QUOTE | DELIM | ALLOWED_CHAR)* '"'
+	;
+
+DoubleQuotedValue
+	: '""' (ESCAPED_QUOTE | DELIM | ALLOWED_CHAR)* '""'
 	;
 
 LINEBREAK
